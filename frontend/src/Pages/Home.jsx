@@ -18,17 +18,17 @@ function Home() {
    const [loading, setLoading] = useState(true);
 
    const getAllBooks = async () => {
+      setLoading(true)
       try {
          const response = await instance.get("/books");
          const dataBooks = response.data.books;
 
          setBooks(dataBooks);
-         setTimeout(() => {
-            setLoading(false);
-         }, 1000);
       } catch (error) {
          console.log("error", error);
          setLoading(false);
+      } finally {
+         setLoading(false)
       }
    };
 

@@ -1,22 +1,15 @@
-import { createContext, useState, useEffect, useContext } from "react";
+import { createContext, useState, useContext } from "react";
 import instance from "../module/AxiosConfig";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useToast } from "@chakra-ui/react";
+import Cookies from 'js-cookie';
 
 const AuthContext = createContext();
-
 export function AuthProvider({ children }) {
-   const [token, setToken] = useState(() => localStorage.getItem("token") || "");
+   const [token, setToken] = useState(() => Cookies.get('token') || '');
    const navigate = useNavigate();
    const toast = useToast();
-
-   useEffect(() => {
-      const token = localStorage.getItem("token");
-      if (token) {
-         setToken(token);
-      }
-   }, []);
 
    const login = async (email, password) => {
       try {
@@ -26,10 +19,15 @@ export function AuthProvider({ children }) {
          });
 
          const token = response.data.token;
-         localStorage.setItem("token", token);
+         // localStorage.setItem("token", token);
+         // simpan token di cookies 
+         Cookies.set('token', token, {
+            expires: 7,
+            secure: true,
+         });
+
          setToken(token);
          navigate("/");
-
          toast({
             title: 'Success',
             description: 'Login successful',
@@ -39,6 +37,7 @@ export function AuthProvider({ children }) {
             isClosable: true,
          })
       } catch (error) {
+         console.log(error)
          toast({
             title: 'Error',
             description: 'Email or password is incorrect',
@@ -51,13 +50,15 @@ export function AuthProvider({ children }) {
    };
 
    const logout = () => {
-      localStorage.removeItem("token");
+      // localStorage.removeItem("token");
+      // Hapus token dari cookies
+      Cookies.remove('token');
       setToken("");
       navigate("/login");
    };
 
    return (
-      <AuthContext.Provider value={{ token, login, logout }}>
+      <AuthContext.Provider value={{ login, token, logout }}>
          {children}
       </AuthContext.Provider>
    );
