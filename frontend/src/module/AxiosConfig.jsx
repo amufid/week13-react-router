@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Cookies from 'js-cookie'
 
 // Buat instance Axios khusus
 const instance = axios.create({
@@ -9,7 +10,8 @@ const instance = axios.create({
 instance.interceptors.request.use(
    (config) => {
       // Ambil token dari localStorage
-      const token = localStorage.getItem('token');
+      // const token = localStorage.getItem('token');
+      const token = Cookies.get('token')
 
       // Jika token ada, tambahkan ke header Authorization
       if (token) {

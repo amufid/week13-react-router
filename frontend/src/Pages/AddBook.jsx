@@ -39,9 +39,10 @@ function AddBook() {
             isClosable: true,
          })
       } catch (error) {
+         console.log(error)
          toast({
             title: 'Error',
-            description: error.response.statusText || 'Something went wrong',
+            description: error.response.data || 'Something went wrong',
             position: 'top',
             status: 'error',
             duration: 5000,

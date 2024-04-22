@@ -1,7 +1,8 @@
-import { Input, FormLabel, Heading, Container, Box, useToast } from "@chakra-ui/react";
+import { Input, FormLabel, Heading, Container, Box, useToast, Text, Button } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import instance from "../module/AxiosConfig";
+import { useAuth } from '../Components/AuthProvider'
 
 function UpdateBook() {
    const [title, setTitle] = useState("");
@@ -12,6 +13,7 @@ function UpdateBook() {
    const navigate = useNavigate();
    const { id } = useParams();
    const toast = useToast();
+   const auth = useAuth();
 
    useEffect(() => {
       const getBookById = async () => {
@@ -54,9 +56,24 @@ function UpdateBook() {
             isClosable: true,
          })
       } catch (error) {
+         if (error.response.data.message == 'Token tidak valid/expired') {
+            toast({
+               position: 'top',
+               duration: 5000,
+               render: () => (
+                  <Box p={5} bg="orange.400" color="white" rounded='md'align='center'>
+                     <Heading fontSize='xl' mb={3}>Alert</Heading>
+                     <Text>Please re-login!</Text>
+                     <Button colorScheme="red" mt={3} onClick={() => auth.logout()}>
+                        Login
+                     </Button>
+                  </Box>
+               ),
+            });
+         }
          toast({
             title: 'Error',
-            description: error.response.statusText || 'Something went wrong',
+            description: error.response.data.message || 'Something went wrong',
             position: 'top',
             status: 'error',
             duration: 5000,

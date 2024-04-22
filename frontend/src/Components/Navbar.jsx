@@ -65,7 +65,8 @@ function Navbar() {
                                  _hover={{ color: "teal.500" }}
                                  variant="ghost"
                               >
-                                 <a href="/register">Register</a>
+                                 <a href="/register"
+                                 >Register</a>
                               </Button>
                            </ButtonGroup>
                         ) : (
@@ -77,6 +78,7 @@ function Navbar() {
                               >
                                  <a href="/addBook">Add Book</a>
                               </Button>
+
                               <Button
                                  colorScheme="facebook"
                                  _hover={{ color: "teal.500" }}

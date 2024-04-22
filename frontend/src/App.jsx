@@ -9,6 +9,7 @@ import UpdateBook from "./Pages/UpdateBook";
 import DetailBook from "./Pages/DetailBook";
 import Navbar from './Components/Navbar';
 import { Heading } from '@chakra-ui/react'
+import Auth from './Pages/Auth'
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/auth" element={<Auth />} />
             <Route path="/addBook" element={
               <PrivateRoute>
                 <AddBook />
