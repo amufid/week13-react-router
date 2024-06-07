@@ -3,7 +3,7 @@ import Cookies from 'js-cookie'
 
 // Buat instance Axios khusus
 const instance = axios.create({
-   baseURL: 'https://nodejs-prisma-8xsf9d91r-mufids-projects-16b66c7d.vercel.app'
+   baseURL: 'https://nodejs-prisma-16n8iq9hf-mufids-projects-16b66c7d.vercel.app'
 });
 
 // Tambahkan interceptor request untuk memasukkan token ke header
