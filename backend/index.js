@@ -1,6 +1,6 @@
 const express = require('express');
 const multer = require('multer');
-// const cors = require('cors');
+const cors = require('cors');
 const path = require('path');
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
@@ -26,7 +26,9 @@ async function authenticateTokenMiddleware(req, res, next) {
 }
 
 app.use(express.json());
-// app.use(cors());
+app.use(cors({
+  origin: 'https://books-collection-psi.vercel.app',
+}));
 
 app.use('/uploads', express.static('uploads'));
 
