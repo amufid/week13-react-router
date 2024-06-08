@@ -121,7 +121,6 @@ function AddBook() {
                   size="md"
                   name="image"
                   onChange={handleFile}
-                  required
                />
 
                <Box w={28} ml='auto' mr='auto'>
